@@ -22,8 +22,15 @@ public class PrincipaisComandosSelenium {
         WebDriver driver = new ChromeDriver(options); //Abrir o browser
         driver.get("https://qaacademy.com.br");
         Thread.sleep(3000);// add espera de 3 segundos
+        
         driver.findElement(By.xpath("//button[contains(text(),'Aceitar')]")).click();
         Thread.sleep(1000);
-        driver.findElement(By.xpath("//*//div[1]/div[5]/ul[1]/li[2]/a[1]/wix-image[1]/img")).click();
+        driver.findElement(By.xpath("//input[@id='input_comp-k37gdip8']")).click();
+        driver.findElement(By.xpath("//input[@id='input_comp-k37gdip8']")).sendKeys("Teste QA Academy"); //Insere texto na tela
+
+        driver.findElement(By.xpath("//input[@id='input_comp-k37gdiq1']")).click();
+        driver.findElement(By.xpath("//input[@id='input_comp-k37gdiq1']")).sendKeys("teste@gmail.com");
+        driver.findElement(By.xpath("//*/form[1]/div[1]/div[1]/div[7]/button[1]")).click();
+
     }
 }
