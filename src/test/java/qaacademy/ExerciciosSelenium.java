@@ -1,11 +1,13 @@
 package qaacademy;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+
 
 public class ExerciciosSelenium {
 
@@ -42,9 +44,22 @@ public class ExerciciosSelenium {
         //Phone
         driver.findElement(By.xpath("//form[1]/div[4]/div[1]/input[1]")).click();
         driver.findElement(By.xpath("//form[1]/div[4]/div[1]/input[1]")).sendKeys("16996212169");
+        //Select gender
+        driver.findElement(By.xpath("//*/form[1]//label[1]/input[1]")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//*/form[1]//label[1]/input[1]")).isSelected());
+        //Select Hobbies
+        driver.findElement(By.xpath("//input[@id='checkbox2']")).click();
+        Assert.assertTrue(driver.findElement(By.xpath("//input[@id='checkbox2']")).isSelected());
+        //Select lista
+        driver.findElement(By.xpath("//div[@id='msdd']")).click();
+        Thread.sleep(1000);
+        driver.findElement(By.xpath("//a[contains(text(),'Norwegian')]")).click();
+        Thread.sleep(1000);
+        boolean norwegianIsDisplayed = driver.findElement(By.xpath("//*/form[1]/div[7]/div[1]/multi-select[1]/div[1]/div[1]")).isDisplayed();
+        Assert.assertTrue(norwegianIsDisplayed);
     }
 
-    @AfterClass
+    @AfterClass //Roda apos de todos os testes da classe
     public static void after() throws InterruptedException {
         Thread.sleep(3000);
         driver.quit();
