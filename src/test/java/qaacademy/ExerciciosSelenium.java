@@ -1,5 +1,6 @@
 package qaacademy;
 
+import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -17,16 +18,16 @@ public class ExerciciosSelenium {
     static WebDriver driver;
 
     @Before
-    public void before() throws InterruptedException{
+    public void before() {
         options = new ChromeOptions();
         driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://demo.automationtesting.in/Register.html");
         driver.manage().window().maximize();
-        Thread.sleep(3000);
     }
 
     @Test
-    public void preencheFormulario() throws InterruptedException {
+    public void preencheFormulario() {
         // options.addArguments("--headless");
         // options.addArguments("start-maximized");
         // options.addArguments("disable-infobars");
@@ -42,7 +43,6 @@ public class ExerciciosSelenium {
         else{
             System.out.println("WebElement não esta presente");
         }    
-        Thread.sleep(1000);
 
         // Full name-First
         driver.findElement(By.xpath("//form[1]/div[1]/div[1]/input[1]")).sendKeys("Emerson"); // Somente com o sendkeys ja envia o texto, sem necessidade do click
@@ -69,15 +69,11 @@ public class ExerciciosSelenium {
 
         // Select lista
         driver.findElement(By.xpath("//div[@id='msdd']")).click();
-        Thread.sleep(1000);
         driver.findElement(By.xpath("//a[contains(text(),'Norwegian')]")).click();
-        Thread.sleep(1000);
         driver.findElement(By.xpath("//*[@id='basicBootstrapForm']/div[7]/div/multi-select/div[2]/ul/li[3]/a")).click();
-        Thread.sleep(1000);
         boolean norwegianIsDisplayed = driver.findElement(By.xpath("//div[contains(text(),'Norwegian')]")).isDisplayed();
         boolean catalanDisplayed = driver.findElement(By.xpath("//div[contains(text(),'Catalan')]")).isDisplayed();
         Assert.assertTrue(norwegianIsDisplayed && catalanDisplayed);
-        Thread.sleep(1000);
 
         // Select lista skills tipo <options>
         WebElement selectElement = driver.findElement(By.xpath("//select[@id='Skills']"));
@@ -106,16 +102,18 @@ public class ExerciciosSelenium {
 
         // Confirm Password
         driver.findElement(By.xpath("//input[@id='secondpassword']")).sendKeys("123456");
-        Thread.sleep(2000);
 
         // Submit Button
         driver.findElement(By.xpath("//button[@id='submitbtn']")).click();
+
+        String contemLanguage = "Catalan";
+        Assert.assertTrue("Linguagem não localizada", driver.getPageSource().contains(contemLanguage)); // getPageSource busca o codigo da pagina toda.
+        
     }
 
     @AfterClass // Roda apos de todos os testes da classe
-    public static void after() throws InterruptedException {
-        Thread.sleep(3000);
-        // driver.quit();
+    public static void after() {
+        driver.quit();
     }
 
 }
